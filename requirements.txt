@@ -1,0 +1,2 @@
+Nuitka==0.9.6
+ordered-set==4.1.0
