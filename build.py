@@ -33,6 +33,7 @@ def build(withconsole):
                           f"--include-data-dir={ConfigFolder}=Config " \
                           f"--include-data-dir={FontFolder}=Font " \
                           f"--include-data-dir={ResourcesFolder}=Resources " \
+                          f"--enable-plugin=pyside6 " \
                           f"{buildfile_name}"
             else:
                 command = f"python -m nuitka --mingw64 --show-modules --follow-imports " \
@@ -43,6 +44,7 @@ def build(withconsole):
                           f"--include-data-dir={ConfigFolder}=Config " \
                           f"--include-data-dir={FontFolder}=Font " \
                           f"--include-data-dir={ResourcesFolder}=Resources " \
+                          f"--enable-plugin=pyside6 " \
                           f"--windows-disable-console " \
                           f"{buildfile_name}"
 
