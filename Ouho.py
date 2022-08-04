@@ -6,6 +6,7 @@ import os
 from Utils import jsonreader
 from Utils.Graphics import allignment
 from Utils.Graphics.in_game import intro
+from Utils.Components.Buttons import BasicButton
 
 os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
 import pygame
@@ -22,9 +23,7 @@ fps = int(config.fps)
 pygame.init()
 icon = pygame.image.load(load_file("Icon/OUHO.png"))
 pygame.display.set_icon(icon)
-screen = pygame.display.set_mode(
-    (3840, 2160), DOUBLEBUF | HWSURFACE | SCALED | FULLSCREEN
-)
+screen = pygame.display.set_mode((0, 0), DOUBLEBUF | HWSURFACE | FULLSCREEN)
 screen_x, screen_y = screen.get_size()
 print(screen_x, screen_y)
 pygame.display.set_caption("Ouho")
@@ -35,17 +34,45 @@ clock = pygame.time.Clock()
 img_quartz_flag_horizontal = pygame.image.load(
     load_file("Resources/quartz_flag_horizontal.png")
 ).convert_alpha()
+img_quartz_flag_horizontal = pygame.transform.smoothscale(
+    img_quartz_flag_horizontal,
+    (
+        screen_x * (img_quartz_flag_horizontal.get_width() / 3840),
+        screen_y * (img_quartz_flag_horizontal.get_height() / 2160),
+    ),
+)
 (
     img_quartz_flag_horizontal_x,
     img_quartz_flag_horizontal_y,
 ) = img_quartz_flag_horizontal.get_size()
 img_quartz = pygame.image.load(load_file("Resources/quartz.png")).convert_alpha()
+img_quartz = pygame.transform.smoothscale(
+    img_quartz,
+    (
+        screen_x * (img_quartz.get_width() / 3840),
+        screen_y * (img_quartz.get_height() / 2160),
+    ),
+)
 img_quartz_x, img_quartz_y = img_quartz.get_size()
 img_tiger_tank = pygame.image.load(
     load_file("Resources/tiger-tank.png")
 ).convert_alpha()
+img_tiger_tank = pygame.transform.smoothscale(
+    img_tiger_tank,
+    (
+        screen_x * (img_tiger_tank.get_width() / 3840),
+        screen_y * (img_tiger_tank.get_height() / 2160),
+    ),
+)
 img_tiger_tank_x, img_tiger_tank_y = img_tiger_tank.get_size()
 img_ouho = pygame.image.load(load_file("Resources/ouho.png")).convert_alpha()
+img_ouho = pygame.transform.smoothscale(
+    img_ouho,
+    (
+        screen_x * (img_ouho.get_width() / 3840),
+        screen_y * (img_ouho.get_height() / 2160),
+    ),
+)
 img_ouho_x, img_ouho_y = img_ouho.get_size()
 # Sound / Music
 sound_intro = pygame.mixer.Sound(load_file("Resources/quartz_intro.wav"))
@@ -53,9 +80,9 @@ sound_intro = pygame.mixer.Sound(load_file("Resources/quartz_intro.wav"))
 pygame.mixer.music.load(load_file("Resources/War_Music.wav"))
 
 # Fonts
-font_gmarket_regular = pygame.font.Font(load_file("Font/GmarketSansTTFMedium.ttf"), 120)
-font_gmarket_regular_big = pygame.font.Font(
-    load_file("Font/GmarketSansTTFMedium.ttf"), 240
+
+font_gmarket_regular = pygame.font.Font(
+    load_file("Font/GmarketSansTTFMedium.ttf"), int(screen_y * (120 / 2160))
 )
 # //////////////////////////////////////////////////////////////////////////////
 mainLoop = True
@@ -79,14 +106,18 @@ while mainLoop:
 
     dt = clock.tick(fps)
 
-    if SI_TIME * 1 < pygame.time.get_ticks() - start_time < SI_TIME * 3:
+    if SI_TIME * 1 < pygame.time.get_ticks() < SI_TIME * 3:
         if intro_playsound:
             sound_intro.play()
             intro_playsound = False
-        intro.draw_quartz(screen, img_quartz, img_quartz_x, img_quartz_y)
-    if SI_TIME * 3.5 < pygame.time.get_ticks() - start_time < SI_TIME * 7.5:
+        intro.draw_quartz(
+            screen, screen_x, screen_y, img_quartz, img_quartz_x, img_quartz_y
+        )
+    if SI_TIME * 3.5 < pygame.time.get_ticks() < SI_TIME * 7.5:
         intro.supported(
             screen,
+            screen_x,
+            screen_y,
             font_gmarket_regular,
             img_quartz_flag_horizontal,
             img_quartz_flag_horizontal_x,
@@ -97,18 +128,28 @@ while mainLoop:
             pygame.mixer.music.play(-1)
             background_music = False
         screen.blit(img_tiger_tank, (0, 0))
-        upbar = pygame.Surface((screen_x, 300))
+        upbar = pygame.Surface((screen_x, img_ouho_x))
         upbar.set_alpha(80)
         upbar.fill((0, 0, 0))
         screen.blit(upbar, (0, 0))
-        leftbar = pygame.Surface((300, screen_y))
+        leftbar = pygame.Surface((img_ouho_x, screen_y))
         leftbar.set_alpha(80)
         leftbar.fill((0, 0, 0))
         screen.blit(leftbar, (0, 0))
         img_ouho.set_alpha(120)
         screen.blit(img_ouho, (0, 0))
-        ouho_text = font_gmarket_regular_big.render("OUHO", False, (255, 255, 255))
-        screen.blit(ouho_text, (320, 30))
+        BasicButton.draw(
+            screen,
+            BUTTON_X=600,
+            BUTTON_Y=100,
+            POS_X=screen_x * (9 / 16),
+            POS_Y=screen_y * (9 / 16),
+            font=font_gmarket_regular,
+            text="게임 시작",
+            text_color=(255, 255, 255),
+            button_color=(0, 0, 0),
+            alpha=120,
+        )
 
     pygame.display.flip()
 

@@ -11,13 +11,13 @@ def run():
     try:
         system = platform.system()
         print(system)
-        o_py_files = [_ for _ in os.listdir(load_file("../")) if _.endswith("py")]
-        utils_py_files = [
-            os.path.join("./Utils", _)
-            for _ in os.listdir(load_file("../Utils"))
-            if _.endswith("py")
-        ]
-        l_py_files = o_py_files + utils_py_files
+        l_py_files = []
+        for root, dirs, files in os.walk("./"):
+            for file in files:
+                if file.endswith(".py") and not root.startswith("./venv"):
+                    l_py_files.append(os.path.join(root, file))
+
+        print(l_py_files)
         if system == "Windows":
             for i in l_py_files:
                 command = f"black {i}"
