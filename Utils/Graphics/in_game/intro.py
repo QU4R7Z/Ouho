@@ -20,7 +20,7 @@ def supported(
     img_quartz_flag_horizontal_x,
     img_quartz_flag_horizontal_y,
 ):
-    screen.fill((1, 1, 1))
+    screen.fill((3, 3, 3))
     supported_text = font.render("WITH", False, (255, 255, 255))
     screen.blit(
         supported_text,

@@ -7,6 +7,7 @@ from Utils import jsonreader
 from Utils.Graphics import allignment
 from Utils.Graphics.in_game import intro
 from Utils.Components.Buttons import BasicButton
+from Utils.Graphics.in_game import game_main_ui
 
 os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
 import pygame
@@ -127,28 +128,15 @@ while mainLoop:
         if background_music:
             pygame.mixer.music.play(-1)
             background_music = False
-        screen.blit(img_tiger_tank, (0, 0))
-        upbar = pygame.Surface((screen_x, img_ouho_x))
-        upbar.set_alpha(80)
-        upbar.fill((0, 0, 0))
-        screen.blit(upbar, (0, 0))
-        leftbar = pygame.Surface((img_ouho_x, screen_y))
-        leftbar.set_alpha(80)
-        leftbar.fill((0, 0, 0))
-        screen.blit(leftbar, (0, 0))
-        img_ouho.set_alpha(120)
-        screen.blit(img_ouho, (0, 0))
-        BasicButton.draw(
-            screen,
-            BUTTON_X=600,
-            BUTTON_Y=100,
-            POS_X=screen_x * (9 / 16),
-            POS_Y=screen_y * (9 / 16),
-            font=font_gmarket_regular,
-            text="게임 시작",
-            text_color=(255, 255, 255),
-            button_color=(0, 0, 0),
-            alpha=120,
+        game_main_ui.draw(
+            screen=screen,
+            img_tiger_tank=img_tiger_tank,
+            screen_x=screen_x,
+            screen_y=screen_y,
+            img_ouho=img_ouho,
+            img_ouho_x=img_ouho_x,
+            img_ouho_y=img_ouho_y,
+            font_gmarket_regular=font_gmarket_regular,
         )
 
     pygame.display.flip()
