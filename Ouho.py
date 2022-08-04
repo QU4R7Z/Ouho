@@ -1,8 +1,11 @@
-import os
 import sys
 
-from PySide6.QtGui import QIcon
-from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton
+from pygame.locals import *
+import os
+from Utils import jsonreader
+
+os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
+import pygame
 
 
 # //////////////////////////////////////////////////////////////////////////////
@@ -11,24 +14,40 @@ def load_file(filename):
 
 
 # //////////////////////////////////////////////////////////////////////////////
-class MainWindow(QMainWindow):
-    def __init__(self):
-        super(MainWindow, self).__init__()
-        self.setup_window()
+config = jsonreader.get(load_file("Config/config.json"))
+fps = int(config.fps)
+pygame.init()
+icon = pygame.image.load(load_file("Icon/OUHO.png"))
+pygame.display.set_icon(icon)
+screen = pygame.display.set_mode(
+    (1920, 1080), DOUBLEBUF | HWSURFACE | SCALED | FULLSCREEN
+)
+screen_x, screen_y = screen.get_size()
+print(screen_x, screen_y)
+pygame.display.set_caption("Ouho")
+clock = pygame.time.Clock()
 
-    def setup_window(self):
-        self.setWindowTitle("Ouho")
-        appIcon = QIcon(load_file("Icon/OUHO.png"))
-        self.setWindowIcon(appIcon)
-        self.setGeometry(0, 0, 400, 600)
+# //////////////////////////////////////////////////////////////////////////////
+mainLoop = True
+while mainLoop:
+    events = pygame.event.get()
+    if events:
+        for event in events:
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                mainLoop = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pass
+            if event.type == pygame.MOUSEWHEEL:
+                pass
 
+    dt = clock.tick(fps)
 
-def main():
-    app = QApplication(sys.argv)
-    window = MainWindow()
-    window.show()
-    sys.exit(app.exec())
+    screen.fill((0, 0, 0))
+    pygame.display.flip()
 
-
-if __name__ == "__main__":
-    main()
+# //////////////////////////////////////////////////////////////////////////////
+pygame.quit()
+sys.exit()
