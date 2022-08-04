@@ -41,7 +41,9 @@ img_quartz_flag_horizontal = pygame.image.load(
 ) = img_quartz_flag_horizontal.get_size()
 img_quartz = pygame.image.load(load_file("Resources/quartz.png")).convert_alpha()
 img_quartz_x, img_quartz_y = img_quartz.get_size()
-img_tiger_tank = pygame.image.load(load_file("Resources/tiger-tank.png")).convert_alpha()
+img_tiger_tank = pygame.image.load(
+    load_file("Resources/tiger-tank.png")
+).convert_alpha()
 img_tiger_tank_x, img_tiger_tank_y = img_tiger_tank.get_size()
 img_ouho = pygame.image.load(load_file("Resources/ouho.png")).convert_alpha()
 img_ouho_x, img_ouho_y = img_ouho.get_size()
@@ -52,6 +54,9 @@ pygame.mixer.music.load(load_file("Resources/War_Music.wav"))
 
 # Fonts
 font_gmarket_regular = pygame.font.Font(load_file("Font/GmarketSansTTFMedium.ttf"), 120)
+font_gmarket_regular_big = pygame.font.Font(
+    load_file("Font/GmarketSansTTFMedium.ttf"), 240
+)
 # //////////////////////////////////////////////////////////////////////////////
 mainLoop = True
 start_time = pygame.time.get_ticks()
@@ -102,6 +107,8 @@ while mainLoop:
         screen.blit(leftbar, (0, 0))
         img_ouho.set_alpha(120)
         screen.blit(img_ouho, (0, 0))
+        ouho_text = font_gmarket_regular_big.render("OUHO", False, (255, 255, 255))
+        screen.blit(ouho_text, (320, 30))
 
     pygame.display.flip()
 
