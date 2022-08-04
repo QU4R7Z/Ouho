@@ -41,16 +41,21 @@ img_quartz_flag_horizontal = pygame.image.load(
 ) = img_quartz_flag_horizontal.get_size()
 img_quartz = pygame.image.load(load_file("Resources/quartz.png")).convert_alpha()
 img_quartz_x, img_quartz_y = img_quartz.get_size()
-
+img_tiger_tank = pygame.image.load(load_file("Resources/tiger-tank.png")).convert_alpha()
+img_tiger_tank_x, img_tiger_tank_y = img_tiger_tank.get_size()
+img_ouho = pygame.image.load(load_file("Resources/ouho.png")).convert_alpha()
+img_ouho_x, img_ouho_y = img_ouho.get_size()
 # Sound / Music
 sound_intro = pygame.mixer.Sound(load_file("Resources/quartz_intro.wav"))
+
+pygame.mixer.music.load(load_file("Resources/War_Music.wav"))
 
 # Fonts
 font_gmarket_regular = pygame.font.Font(load_file("Font/GmarketSansTTFMedium.ttf"), 120)
 # //////////////////////////////////////////////////////////////////////////////
 mainLoop = True
 start_time = pygame.time.get_ticks()
-intro_playsound = True
+intro_playsound, background_music = True, True
 SI_TIME = 1000
 while mainLoop:
     events = pygame.event.get()
@@ -74,7 +79,7 @@ while mainLoop:
             sound_intro.play()
             intro_playsound = False
         intro.draw_quartz(screen, img_quartz, img_quartz_x, img_quartz_y)
-    if SI_TIME * 4 < pygame.time.get_ticks() - start_time < SI_TIME * 8:
+    if SI_TIME * 3.5 < pygame.time.get_ticks() - start_time < SI_TIME * 7.5:
         intro.supported(
             screen,
             font_gmarket_regular,
@@ -82,7 +87,22 @@ while mainLoop:
             img_quartz_flag_horizontal_x,
             img_quartz_flag_horizontal_y,
         )
-    
+    if SI_TIME * 7.5 < pygame.time.get_ticks():
+        if background_music:
+            pygame.mixer.music.play(-1)
+            background_music = False
+        screen.blit(img_tiger_tank, (0, 0))
+        upbar = pygame.Surface((screen_x, 300))
+        upbar.set_alpha(80)
+        upbar.fill((0, 0, 0))
+        screen.blit(upbar, (0, 0))
+        leftbar = pygame.Surface((300, screen_y))
+        leftbar.set_alpha(80)
+        leftbar.fill((0, 0, 0))
+        screen.blit(leftbar, (0, 0))
+        img_ouho.set_alpha(120)
+        screen.blit(img_ouho, (0, 0))
+
     pygame.display.flip()
 
 # //////////////////////////////////////////////////////////////////////////////

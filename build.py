@@ -5,6 +5,7 @@ import time
 
 from Utils import jsonreader
 from Utils import requirements_txt
+from Utils import prettier
 
 
 def build(withconsole):
@@ -15,6 +16,7 @@ def build(withconsole):
 
         if system == "Windows":
             requirements_txt.run()
+            prettier.run()
 
             buildfile_name = "Ouho.py"
             Output_dir_name = "Ouho-build"
