@@ -9,6 +9,7 @@ from Utils.Graphics.in_game import intro
 from Utils.Components.Buttons import BasicButton
 from Utils.Graphics.in_game import game_main_ui
 from Utils.Components.Buttons import ButtonZoneBuffer
+from Utils.Graphics.in_game import creators_ui
 
 
 # //////////////////////////////////////////////////////////////////////////////
@@ -75,6 +76,10 @@ img_ouho = pygame.transform.smoothscale(
     ),
 )
 img_ouho_x, img_ouho_y = img_ouho.get_size()
+
+img_x_icon = pygame.image.load(load_file("Resources/x_icon.png")).convert_alpha()
+img_x_icon = pygame.transform.smoothscale(img_x_icon, (screen_y / 20, screen_y / 20))
+img_x_icon_x, img_x_icon_y = img_x_icon.get_size()
 # Sound / Music
 sound_intro = pygame.mixer.Sound(load_file("Resources/quartz_intro.wav"))
 
@@ -92,6 +97,8 @@ intro_playsound, background_music = True, True
 SI_TIME = 1000
 MOUSE_X, MOUSE_Y = -1, -1
 MOUSE_CLICK = False
+BUTTON_CLICKED_NAME = None
+CREATORS_UI = False
 while mainLoop:
     events = pygame.event.get()
     MOUSE_X, MOUSE_Y = pygame.mouse.get_pos()
@@ -107,9 +114,14 @@ while mainLoop:
                 MOUSE_CLICK = True
             if event.type == pygame.MOUSEWHEEL:
                 pass
-    ButtonZoneBuffer.BUTTON_CLICKED(MOUSE_X, MOUSE_Y, MOUSE_CLICK)
+    BUTTON_CLICKED_NAME = ButtonZoneBuffer.BUTTON_CLICKED(
+        MOUSE_X=MOUSE_X,
+        MOUSE_Y=MOUSE_Y,
+        MOUSE_CLICK=MOUSE_CLICK
+    )
     dt = clock.tick(fps)
 
+    # ////////////////////////////////////////////////////////////////////////////// INTRO
     if SI_TIME * 1 < pygame.time.get_ticks() < SI_TIME * 3:
         if intro_playsound:
             sound_intro.play()
@@ -127,6 +139,7 @@ while mainLoop:
             img_quartz_flag_horizontal_x,
             img_quartz_flag_horizontal_y,
         )
+    # ////////////////////////////////////////////////////////////////////////////// MAIN
     if SI_TIME * 7.5 < pygame.time.get_ticks():
         if background_music:
             pygame.mixer.music.play(-1)
@@ -139,8 +152,37 @@ while mainLoop:
             img_ouho=img_ouho,
             img_ouho_x=img_ouho_x,
             img_ouho_y=img_ouho_y,
-            font_gmarket_regular=font_gmarket_regular,
+            font=font_gmarket_regular,
         )
+
+    # ////////////////////////////////////////////////////////////////////////////// CREATORS_UI
+    if BUTTON_CLICKED_NAME == "BTN_CREATORS":
+        CREATORS_UI = True
+        ButtonZoneBuffer.ABLE_BUTTON("BTN_EXIT_CREATORS_UI")
+    if CREATORS_UI:
+        ButtonZoneBuffer.DISABLE_BUTTON("BTN_SINGLEPLAY")
+        ButtonZoneBuffer.DISABLE_BUTTON("BTN_MULTIPLAY")
+        ButtonZoneBuffer.DISABLE_BUTTON("BTN_SETTINGS")
+        ButtonZoneBuffer.DISABLE_BUTTON("BTN_CREATORS")
+        ButtonZoneBuffer.DISABLE_BUTTON("BTN_EXIT")
+        creators_ui.draw(
+            screen=screen,
+            screen_x=screen_x,
+            screen_y=screen_y,
+            font=font_gmarket_regular,
+            img_x_icon=img_x_icon,
+            img_x_icon_x=img_x_icon_x,
+            img_x_icon_y=img_x_icon_y,
+        )
+        if BUTTON_CLICKED_NAME == "BTN_EXIT_CREATORS_UI":
+            ButtonZoneBuffer.ABLE_BUTTON("BTN_SINGLEPLAY")
+            ButtonZoneBuffer.ABLE_BUTTON("BTN_MULTIPLAY")
+            ButtonZoneBuffer.ABLE_BUTTON("BTN_SETTINGS")
+            ButtonZoneBuffer.ABLE_BUTTON("BTN_CREATORS")
+            ButtonZoneBuffer.ABLE_BUTTON("BTN_EXIT")
+
+            ButtonZoneBuffer.DISABLE_BUTTON("BTN_EXIT_CREATORS_UI")
+            CREATORS_UI = False
 
     pygame.display.flip()
     MOUSE_CLICK = False

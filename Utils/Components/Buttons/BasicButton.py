@@ -15,12 +15,17 @@ def draw(
     button_color,
     alpha,
     BTN_NAME,
+    IMAGE
 ):
     button_bar = pygame.Surface((BUTTON_X, BUTTON_Y))
-    button_bar.set_alpha(alpha),
+    if alpha is not None:
+        button_bar.set_alpha(alpha),
     button_bar.fill(button_color)
     screen.blit(button_bar, (POS_X, POS_Y))
     button_text = font.render(text, False, text_color)
+
+    if IMAGE is not None:
+        screen.blit(IMAGE, (POS_X, POS_Y))
 
     ButtonZoneBuffer.Buff(
         BTN_NAME=BTN_NAME,

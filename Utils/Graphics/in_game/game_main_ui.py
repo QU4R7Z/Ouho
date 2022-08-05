@@ -11,7 +11,7 @@ def draw(
     img_ouho,
     img_ouho_x,
     img_ouho_y,
-    font_gmarket_regular,
+    font,
 ):
     screen.blit(img_tiger_tank, (0, 0))
     upbar = pygame.Surface((screen_x, img_ouho_x))
@@ -30,12 +30,13 @@ def draw(
         BUTTON_Y=screen_y / 9,
         POS_X=screen_x * (9 / 16),
         POS_Y=screen_y * (5 / 16),
-        font=font_gmarket_regular,
+        font=font,
         text="혼자서 하기",
         text_color=(255, 255, 255),
         button_color=(0, 0, 0),
         alpha=120,
         BTN_NAME="BTN_SINGLEPLAY",
+        IMAGE=None
     )
     BasicButton.draw(
         screen,
@@ -43,12 +44,13 @@ def draw(
         BUTTON_Y=screen_y / 9,
         POS_X=screen_x * (9 / 16),
         POS_Y=screen_y * (5 / 16) + screen_y / 9 + screen_y * 0.01,
-        font=font_gmarket_regular,
+        font=font,
         text="여럿이서 하기",
         text_color=(255, 255, 255),
         button_color=(0, 0, 0),
         alpha=120,
         BTN_NAME="BTN_MULTIPLAY",
+        IMAGE=None
     )
     BasicButton.draw(
         screen,
@@ -56,12 +58,13 @@ def draw(
         BUTTON_Y=screen_y / 9,
         POS_X=screen_x * (9 / 16),
         POS_Y=screen_y * (5 / 16) + 2 * (screen_y / 9 + screen_y * 0.01),
-        font=font_gmarket_regular,
+        font=font,
         text="설정",
         text_color=(255, 255, 255),
         button_color=(0, 0, 0),
         alpha=120,
         BTN_NAME="BTN_SETTINGS",
+        IMAGE=None
     )
     BasicButton.draw(
         screen,
@@ -69,12 +72,13 @@ def draw(
         BUTTON_Y=screen_y / 9,
         POS_X=screen_x * (9 / 16),
         POS_Y=screen_y * (5 / 16) + 3 * (screen_y / 9 + screen_y * 0.01),
-        font=font_gmarket_regular,
+        font=font,
         text="만든 사람들",
         text_color=(255, 255, 255),
         button_color=(0, 0, 0),
         alpha=120,
         BTN_NAME="BTN_CREATORS",
+        IMAGE=None
     )
     BasicButton.draw(
         screen,
@@ -82,10 +86,11 @@ def draw(
         BUTTON_Y=screen_y / 9,
         POS_X=screen_x * (9 / 16),
         POS_Y=screen_y * (5 / 16) + 4 * (screen_y / 9 + screen_y * 0.01),
-        font=font_gmarket_regular,
+        font=font,
         text="종료",
         text_color=(255, 255, 255),
         button_color=(0, 0, 0),
         alpha=120,
         BTN_NAME="BTN_EXIT",
+        IMAGE=None
     )
