@@ -18,7 +18,7 @@ def draw(
     upbar.set_alpha(80)
     upbar.fill((0, 0, 0))
     screen.blit(upbar, (0, 0))
-    leftbar = pygame.Surface((img_ouho_x, screen_y))
+    leftbar = pygame.Surface((img_ouho_y, screen_y))
     leftbar.set_alpha(80)
     leftbar.fill((0, 0, 0))
     screen.blit(leftbar, (0, 0))
@@ -35,6 +35,7 @@ def draw(
         text_color=(255, 255, 255),
         button_color=(0, 0, 0),
         alpha=120,
+        BTN_NAME="BTN_SINGLEPLAY",
     )
     BasicButton.draw(
         screen,
@@ -47,6 +48,7 @@ def draw(
         text_color=(255, 255, 255),
         button_color=(0, 0, 0),
         alpha=120,
+        BTN_NAME="BTN_MULTIPLAY",
     )
     BasicButton.draw(
         screen,
@@ -59,6 +61,7 @@ def draw(
         text_color=(255, 255, 255),
         button_color=(0, 0, 0),
         alpha=120,
+        BTN_NAME="BTN_SETTINGS",
     )
     BasicButton.draw(
         screen,
@@ -71,6 +74,7 @@ def draw(
         text_color=(255, 255, 255),
         button_color=(0, 0, 0),
         alpha=120,
+        BTN_NAME="BTN_CREATORS",
     )
     BasicButton.draw(
         screen,
@@ -83,4 +87,5 @@ def draw(
         text_color=(255, 255, 255),
         button_color=(0, 0, 0),
         alpha=120,
+        BTN_NAME="BTN_EXIT",
     )

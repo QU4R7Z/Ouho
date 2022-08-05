@@ -1,5 +1,6 @@
 import pygame
 from Utils.Graphics import allignment
+from Utils.Components.Buttons import ButtonZoneBuffer
 
 
 def draw(
@@ -13,13 +14,22 @@ def draw(
     text_color,
     button_color,
     alpha,
+    BTN_NAME,
 ):
     button_bar = pygame.Surface((BUTTON_X, BUTTON_Y))
     button_bar.set_alpha(alpha),
     button_bar.fill(button_color)
     screen.blit(button_bar, (POS_X, POS_Y))
-
     button_text = font.render(text, False, text_color)
+
+    ButtonZoneBuffer.Buff(
+        BTN_NAME=BTN_NAME,
+        X1=POS_X,
+        X2=POS_X + BUTTON_X,
+        Y1=POS_Y,
+        Y2=POS_Y + BUTTON_Y,
+    )
+
     screen.blit(
         button_text,
         (

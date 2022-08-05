@@ -1,6 +1,6 @@
 import sys
 import time
-
+import pygame
 from pygame.locals import *
 import os
 from Utils import jsonreader
@@ -8,9 +8,7 @@ from Utils.Graphics import allignment
 from Utils.Graphics.in_game import intro
 from Utils.Components.Buttons import BasicButton
 from Utils.Graphics.in_game import game_main_ui
-
-os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
-import pygame
+from Utils.Components.Buttons import ButtonZoneBuffer
 
 
 # //////////////////////////////////////////////////////////////////////////////
@@ -24,7 +22,9 @@ fps = int(config.fps)
 pygame.init()
 icon = pygame.image.load(load_file("Icon/OUHO.png"))
 pygame.display.set_icon(icon)
-screen = pygame.display.set_mode((0, 0), DOUBLEBUF | HWSURFACE | FULLSCREEN)
+screen = pygame.display.set_mode(
+    (0, 0), pygame.DOUBLEBUF | pygame.HWSURFACE | pygame.FULLSCREEN
+)
 screen_x, screen_y = screen.get_size()
 print(screen_x, screen_y)
 pygame.display.set_caption("Ouho")
@@ -90,8 +90,11 @@ mainLoop = True
 start_time = pygame.time.get_ticks()
 intro_playsound, background_music = True, True
 SI_TIME = 1000
+MOUSE_X, MOUSE_Y = -1, -1
+MOUSE_CLICK = False
 while mainLoop:
     events = pygame.event.get()
+    MOUSE_X, MOUSE_Y = pygame.mouse.get_pos()
     screen.fill((0, 0, 0))
     if events:
         for event in events:
@@ -101,10 +104,10 @@ while mainLoop:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 mainLoop = False
             if event.type == pygame.MOUSEBUTTONDOWN:
-                pass
+                MOUSE_CLICK = True
             if event.type == pygame.MOUSEWHEEL:
                 pass
-
+    ButtonZoneBuffer.BUTTON_CLICKED(MOUSE_X, MOUSE_Y, MOUSE_CLICK)
     dt = clock.tick(fps)
 
     if SI_TIME * 1 < pygame.time.get_ticks() < SI_TIME * 3:
@@ -140,6 +143,7 @@ while mainLoop:
         )
 
     pygame.display.flip()
+    MOUSE_CLICK = False
 
 # //////////////////////////////////////////////////////////////////////////////
 pygame.quit()

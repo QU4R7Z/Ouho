@@ -80,4 +80,4 @@ def build(withconsole):
 
 
 if __name__ == "__main__":
-    build(withconsole=False)
+    build(withconsole=True)
