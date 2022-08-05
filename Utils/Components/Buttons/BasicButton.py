@@ -15,7 +15,7 @@ def draw(
     button_color,
     alpha,
     BTN_NAME,
-    IMAGE
+    IMAGE,
 ):
     button_bar = pygame.Surface((BUTTON_X, BUTTON_Y))
     if alpha is not None:

@@ -36,7 +36,7 @@ def draw(
         button_color=(0, 0, 0),
         alpha=120,
         BTN_NAME="BTN_SINGLEPLAY",
-        IMAGE=None
+        IMAGE=None,
     )
     BasicButton.draw(
         screen,
@@ -50,7 +50,7 @@ def draw(
         button_color=(0, 0, 0),
         alpha=120,
         BTN_NAME="BTN_MULTIPLAY",
-        IMAGE=None
+        IMAGE=None,
     )
     BasicButton.draw(
         screen,
@@ -64,7 +64,7 @@ def draw(
         button_color=(0, 0, 0),
         alpha=120,
         BTN_NAME="BTN_SETTINGS",
-        IMAGE=None
+        IMAGE=None,
     )
     BasicButton.draw(
         screen,
@@ -78,7 +78,7 @@ def draw(
         button_color=(0, 0, 0),
         alpha=120,
         BTN_NAME="BTN_CREATORS",
-        IMAGE=None
+        IMAGE=None,
     )
     BasicButton.draw(
         screen,
@@ -92,5 +92,5 @@ def draw(
         button_color=(0, 0, 0),
         alpha=120,
         BTN_NAME="BTN_EXIT",
-        IMAGE=None
+        IMAGE=None,
     )

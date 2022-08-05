@@ -90,6 +90,9 @@ pygame.mixer.music.load(load_file("Resources/War_Music.wav"))
 font_gmarket_regular = pygame.font.Font(
     load_file("Font/GmarketSansTTFMedium.ttf"), int(screen_y * (120 / 2160))
 )
+font_gmarket_regular_small = pygame.font.Font(
+    load_file("Font/GmarketSansTTFMedium.ttf"), int(screen_y * (60 / 2160))
+)
 # //////////////////////////////////////////////////////////////////////////////
 mainLoop = True
 start_time = pygame.time.get_ticks()
@@ -115,9 +118,7 @@ while mainLoop:
             if event.type == pygame.MOUSEWHEEL:
                 pass
     BUTTON_CLICKED_NAME = ButtonZoneBuffer.BUTTON_CLICKED(
-        MOUSE_X=MOUSE_X,
-        MOUSE_Y=MOUSE_Y,
-        MOUSE_CLICK=MOUSE_CLICK
+        MOUSE_X=MOUSE_X, MOUSE_Y=MOUSE_Y, MOUSE_CLICK=MOUSE_CLICK
     )
     dt = clock.tick(fps)
 
@@ -170,6 +171,7 @@ while mainLoop:
             screen_x=screen_x,
             screen_y=screen_y,
             font=font_gmarket_regular,
+            smallfont=font_gmarket_regular_small,
             img_x_icon=img_x_icon,
             img_x_icon_x=img_x_icon_x,
             img_x_icon_y=img_x_icon_y,
