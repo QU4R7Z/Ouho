@@ -4,7 +4,15 @@ from Utils.Components.Buttons import BasicButton
 
 
 def draw(
-    screen, screen_x, screen_y, font, smallfont, img_x_icon, img_x_icon_x, img_x_icon_y
+    screen,
+    screen_x,
+    screen_y,
+    font,
+    smallfont,
+    img_x_icon,
+    img_x_icon_x,
+    img_x_icon_y,
+    language,
 ):
     BAR_SIZE_X = screen_x / 3
     BAR_SIZE_Y = screen_y / 1.5
@@ -87,7 +95,7 @@ def draw(
         IMAGE=img_x_icon,
     )
 
-    shi3do_text = font.render("shi3do", False, (255, 255, 255))
+    shi3do_text = font.render(language["SHI3DO"], False, (255, 255, 255))
     screen.blit(
         shi3do_text,
         (

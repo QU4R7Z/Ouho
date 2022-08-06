@@ -4,12 +4,12 @@ import pygame
 from pygame.locals import *
 import os
 from Utils import jsonreader
-from Utils.Graphics import allignment
 from Utils.Graphics.in_game import intro
-from Utils.Components.Buttons import BasicButton
+from Utils import image_loader
 from Utils.Graphics.in_game import game_main_ui
 from Utils.Components.Buttons import ButtonZoneBuffer
 from Utils.Graphics.in_game import creators_ui
+import json
 
 
 # //////////////////////////////////////////////////////////////////////////////
@@ -33,60 +33,38 @@ clock = pygame.time.Clock()
 
 # //////////////////////////////////////////////////////////////////////////////
 # Images
-img_quartz_flag_horizontal = pygame.image.load(
-    load_file("Resources/quartz_flag_horizontal.png")
-).convert_alpha()
-img_quartz_flag_horizontal = pygame.transform.smoothscale(
-    img_quartz_flag_horizontal,
-    (
-        screen_x * (img_quartz_flag_horizontal.get_width() / 3840),
-        screen_y * (img_quartz_flag_horizontal.get_height() / 2160),
-    ),
-)
 (
+    img_quartz_flag_horizontal,
     img_quartz_flag_horizontal_x,
     img_quartz_flag_horizontal_y,
-) = img_quartz_flag_horizontal.get_size()
-img_quartz = pygame.image.load(load_file("Resources/quartz.png")).convert_alpha()
-img_quartz = pygame.transform.smoothscale(
-    img_quartz,
-    (
-        screen_x * (img_quartz.get_width() / 3840),
-        screen_y * (img_quartz.get_height() / 2160),
-    ),
+) = image_loader.load(
+    path=load_file("Resources/quartz_flag_horizontal.png"),
+    SCALE_X=screen_x * (5 / 16),
+    SCALE_Y=screen_y * (111 / 300),
 )
-img_quartz_x, img_quartz_y = img_quartz.get_size()
-img_tiger_tank = pygame.image.load(
-    load_file("Resources/tiger-tank.png")
-).convert_alpha()
-img_tiger_tank = pygame.transform.smoothscale(
-    img_tiger_tank,
-    (
-        screen_x * (img_tiger_tank.get_width() / 3840),
-        screen_y * (img_tiger_tank.get_height() / 2160),
-    ),
+img_quartz, img_quartz_x, img_quartz_y = image_loader.load(
+    path=load_file("Resources/quartz.png"),
+    SCALE_X=screen_x * (416 / 1600),
+    SCALE_Y=screen_y * (416 / 900),
 )
-img_tiger_tank_x, img_tiger_tank_y = img_tiger_tank.get_size()
-img_ouho = pygame.image.load(load_file("Resources/ouho.png")).convert_alpha()
-img_ouho = pygame.transform.smoothscale(
-    img_ouho,
-    (
-        screen_x * (img_ouho.get_width() / 3840),
-        screen_y * (img_ouho.get_height() / 2160),
-    ),
+img_tiger_tank, img_tiger_tank_x, img_tiger_tank_y = image_loader.load(
+    path=load_file("Resources/tiger-tank.png"),
+    SCALE_X=screen_x,
+    SCALE_Y=screen_y,
 )
-img_ouho_x, img_ouho_y = img_ouho.get_size()
-
-img_x_icon = pygame.image.load(load_file("Resources/x_icon.png")).convert_alpha()
-img_x_icon = pygame.transform.smoothscale(img_x_icon, (screen_y / 20, screen_y / 20))
-img_x_icon_x, img_x_icon_y = img_x_icon.get_size()
+img_ouho, img_ouho_x, img_ouho_y = image_loader.load(
+    path=load_file("Resources/ouho.png"),
+    SCALE_X=screen_x * (125 / 1600),
+    SCALE_Y=screen_y * (125 / 900),
+)
+img_x_icon, img_x_icon_x, img_x_icon_y = image_loader.load(
+    path=load_file("Resources/x_icon.png"), SCALE_X=screen_y / 20, SCALE_Y=screen_y / 20
+)
 # Sound / Music
 sound_intro = pygame.mixer.Sound(load_file("Resources/quartz_intro.wav"))
-
 pygame.mixer.music.load(load_file("Resources/War_Music.wav"))
 
 # Fonts
-
 font_gmarket_regular = pygame.font.Font(
     load_file("Font/GmarketSansTTFMedium.ttf"), int(screen_y * (120 / 2160))
 )
@@ -102,6 +80,11 @@ MOUSE_X, MOUSE_Y = -1, -1
 MOUSE_CLICK = False
 BUTTON_CLICKED_NAME = None
 CREATORS_UI = False
+LANGUAGE = "kr"
+with open(
+    load_file(f"Language/{str(LANGUAGE).lower()}.json"), encoding="utf8"
+) as LANGUAGE_JSON:
+    LANGUAGE = json.load(LANGUAGE_JSON)
 while mainLoop:
     events = pygame.event.get()
     MOUSE_X, MOUSE_Y = pygame.mouse.get_pos()
@@ -154,6 +137,7 @@ while mainLoop:
             img_ouho_x=img_ouho_x,
             img_ouho_y=img_ouho_y,
             font=font_gmarket_regular,
+            language=LANGUAGE,
         )
 
     # ////////////////////////////////////////////////////////////////////////////// CREATORS_UI
@@ -175,6 +159,7 @@ while mainLoop:
             img_x_icon=img_x_icon,
             img_x_icon_x=img_x_icon_x,
             img_x_icon_y=img_x_icon_y,
+            language=LANGUAGE,
         )
         if BUTTON_CLICKED_NAME == "BTN_EXIT_CREATORS_UI":
             ButtonZoneBuffer.ABLE_BUTTON("BTN_SINGLEPLAY")
