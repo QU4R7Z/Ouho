@@ -19,6 +19,7 @@ def draw(
     smallfont,
     footer,
     footer_text,
+    EXIT_BTN_NAME,
 ):
     windows_bar = pygame.Surface((WINDOWS_SIZE_X, WINDOWS_SIZE_Y))
     windows_bar.fill(WINDOWS_COLOR)
@@ -52,7 +53,7 @@ def draw(
         text_color=(0, 0, 0),
         button_color=(0, 0, 0),
         alpha=None,
-        BTN_NAME="BTN_EXIT_CREATORS_UI",
+        BTN_NAME=EXIT_BTN_NAME,
         IMAGE=img_x_icon,
     )
 

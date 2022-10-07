@@ -9,6 +9,7 @@ from Utils import image_loader
 from Utils.Graphics.in_game import game_main_ui
 from Utils.Components.Buttons import ButtonZoneBuffer
 from Utils.Graphics.in_game import creators_ui
+from Utils.Graphics.in_game import settings_ui
 import json
 
 
@@ -79,7 +80,7 @@ SI_TIME = 1000
 MOUSE_X, MOUSE_Y = -1, -1
 MOUSE_CLICK = False
 BUTTON_CLICKED_NAME = None
-CREATORS_UI = False
+CREATORS_UI, SETTINGS_UI = False, False
 LANGUAGE = "kr"
 with open(
     load_file(f"Language/{str(LANGUAGE).lower()}.json"), encoding="utf8"
@@ -160,6 +161,7 @@ while mainLoop:
             img_x_icon_x=img_x_icon_x,
             img_x_icon_y=img_x_icon_y,
             language=LANGUAGE,
+            config=config,
         )
         if BUTTON_CLICKED_NAME == "BTN_EXIT_CREATORS_UI":
             ButtonZoneBuffer.ABLE_BUTTON("BTN_SINGLEPLAY")
@@ -167,9 +169,40 @@ while mainLoop:
             ButtonZoneBuffer.ABLE_BUTTON("BTN_SETTINGS")
             ButtonZoneBuffer.ABLE_BUTTON("BTN_CREATORS")
             ButtonZoneBuffer.ABLE_BUTTON("BTN_EXIT")
-
             ButtonZoneBuffer.DISABLE_BUTTON("BTN_EXIT_CREATORS_UI")
             CREATORS_UI = False
+
+    # ////////////////////////////////////////////////////////////////////////////// SETTINGS_UI
+    if BUTTON_CLICKED_NAME == "BTN_SETTINGS":
+        SETTINGS_UI = True
+        ButtonZoneBuffer.ABLE_BUTTON("BTN_EXIT_SETTINGS_UI")
+    if SETTINGS_UI:
+        ButtonZoneBuffer.DISABLE_BUTTON("BTN_SINGLEPLAY")
+        ButtonZoneBuffer.DISABLE_BUTTON("BTN_MULTIPLAY")
+        ButtonZoneBuffer.DISABLE_BUTTON("BTN_SETTINGS")
+        ButtonZoneBuffer.DISABLE_BUTTON("BTN_CREATORS")
+        ButtonZoneBuffer.DISABLE_BUTTON("BTN_EXIT")
+        settings_ui.draw(
+            screen=screen,
+            screen_x=screen_x,
+            screen_y=screen_y,
+            font=font_gmarket_regular,
+            smallfont=font_gmarket_regular_small,
+            img_x_icon=img_x_icon,
+            img_x_icon_x=img_x_icon_x,
+            img_x_icon_y=img_x_icon_y,
+            language=LANGUAGE,
+            config=config,
+        )
+        if BUTTON_CLICKED_NAME == "BTN_EXIT_SETTINGS_UI":
+            ButtonZoneBuffer.ABLE_BUTTON("BTN_SINGLEPLAY")
+            ButtonZoneBuffer.ABLE_BUTTON("BTN_MULTIPLAY")
+            ButtonZoneBuffer.ABLE_BUTTON("BTN_SETTINGS")
+            ButtonZoneBuffer.ABLE_BUTTON("BTN_CREATORS")
+            ButtonZoneBuffer.ABLE_BUTTON("BTN_EXIT")
+
+            ButtonZoneBuffer.DISABLE_BUTTON("BTN_EXIT_SETTINGS_UI")
+            SETTINGS_UI = False
 
     pygame.display.flip()
     MOUSE_CLICK = False

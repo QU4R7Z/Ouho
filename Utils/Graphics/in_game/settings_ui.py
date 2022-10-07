@@ -45,10 +45,10 @@ def draw(
         smallfont=smallfont,
         footer=True,
         footer_text=f"v{config.version}",
-        EXIT_BTN_NAME="BTN_EXIT_CREATORS_UI",
+        EXIT_BTN_NAME="BTN_EXIT_SETTINGS_UI",
     )
 
-    shi3do_text = font.render(language["CREATORS"], False, (255, 255, 255))
+    shi3do_text = font.render(language["SETTINGS"], False, (255, 255, 255))
     screen.blit(
         shi3do_text,
         (
